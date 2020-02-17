@@ -17,6 +17,45 @@ namespace corrida_kart
             int volta;
             double velocidade;
 
+            private string arquivo;
+            private string mensagem;
+        private void MetodoParaLerLinhaArquivo()
+        {
+            List<string> mensagemLinha = new List<string>();
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "xxxxxxxxxo";
+                openFileDialog.InitialDirectory = @"c:\";
+                 openFileDialog.Filter = "All files (*.*)|*.*|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    arquivo = openFileDialog.FileName;
+            }
+            if (String.IsNullOrEmpty(arquivo))
+            {
+                MessageBox.Show("Arquivo Invalido", "Salvar Como", MessageBoxButtons.OK);
+            }
+            else
+            {
+                using (StreamReader texto = new StreamReader(arquivo))
+                {
+                    while ((mensagem = texto.ReadLine()) != null)
+                    {
+                        mensagemLinha.Add(mensagem);
+                    }
+                }
+                int registro = mensagemLinha.Count; //total de linhas do arquivo.
+                for (int i = 0; i < mensagemLinha.Count; i++)
+                {
+                    TextBox textbox1 = new TextBox();
+                    textbox1.Text += mensagemLinha[i];
+                    File.WriteAllText(arquivo, mensagemLinha[i] + "1");
+                }
+            }
+        }
+
+
             Console.Write("Digite a Hora: ");
             time = Convert.ToDateTime(Console.ReadLine());
 
